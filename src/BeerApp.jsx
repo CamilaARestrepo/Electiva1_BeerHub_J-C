@@ -16,11 +16,42 @@ export const BeerApp= ()=>{
     const selectChange=(event)=>{
         setCity(event.target.value);
     };
-    
+    console.log(CITYES)
+
     return(
-        <div>
-            <h1>BEER FOR CITY</h1>
+        <>
+       
+        <div className="container">
+        
+            <h1 className="title">BEER FOR CITY</h1>
+            <select className="select" onChange={selectChange} value={city}>
+                {
+                    CITYES.map((item)=>(
+                        <option  key={item} value={item}>
+                            {item.replace("_", " ")}
+                        </option>
+                    ))
+                }
+            </select>
+            {
+                isLoading?(
+                    <p className="loading">Procesando...</p>
+                ): hasError ? (
+                    <p className="error">Error: {hasError}</p>
+                ): (
+                    <ul>
+                        {data.map((brewery)=>(
+                            <li  key={brewery.id} className="card">
+                               <h4>BEER: {brewery.name}</h4>
+                               <p> STATE: {brewery.city}-{brewery.state_province}</p>
+                               <p> LOCATION: {brewery.address_1}</p>
+                            </li>
+                        ))}
+                    </ul>
+                )
+            }
         </div>
+        </>
     )
 
 }
